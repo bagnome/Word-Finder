@@ -6,6 +6,9 @@ class Wordle_Helper:
     errStr = 'You may enter a word as an argument that is five letters in length with only characters A-Z, a-z or underscores. No numbers, special characters, or accented characters are allowed.'
 
     def __init__(self):
+        self.output_setting = 'console'
+        self.output_dir = ''
+        self.handle_cli_args(sys.argv)
         self.guess = ''
         if len(sys.argv) > 1:
             self.guess = sys.argv[1]
@@ -13,6 +16,14 @@ class Wordle_Helper:
         self.matched_words = []
         self.check_validiy()
         self.read_words_file()
+
+    def handle_cli_args(self, args):
+        for arg in args:
+            if arg.startswith('-o'):
+                self.output_setting = 'file'
+                o_param = arg.split('=')
+                if len(o_param) == 2:
+                    self.output_dir = o_param[1]
 
     def stop_with_err(self):
         print(self.errStr)
@@ -75,15 +86,31 @@ class Wordle_Helper:
 
     def write_to_file(self, matches):
         now = datetime.now().strftime('%d-%m-%Y_%H-%M-%S')
-        with open('output__' + now + '.txt', 'w') as f:
-            f.writelines(matches)
-            f.close()
+        try:
+            with open(self.output_dir + 'output__' + now + '.txt', 'w') as f:
+                f.writelines(matches)
+                f.close()
+        except:
+            print('A problem was encountered while saving to file. Check that the directory was written correctly.')
+
+    def write_to_console(self, matches):
+        print('\n')
+        for m in matches:
+            print(m)
+            curr_index = matches.index(m) + 1
+            if (curr_index)%20 == 0:
+                input('------------------------------\n' + str(curr_index) + ' of ' + str(len(matches)) + '\nPress any key to show more...\n------------------------------')
+
+        print('------------------------------\n' + str(len(matches)) + ' matches found.\nDone.\n------------------------------')
 
     def find_matches(self):
         guess_expr = self.gen_expr()
         matches = self.match_with_known_letters(guess_expr)
         matches = self.match_with_present_letters(matches)
-        self.write_to_file(matches)
+        if self.output_setting == 'file':
+            self.write_to_file(matches)
+        else:
+            self.write_to_console(matches)
 
 main = Wordle_Helper()
 main.find_matches()

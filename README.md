@@ -56,6 +56,12 @@ hitch
 hotch
 hutch
 ```
+### Options
+Some optional parameters can be defined after the search patter.
+- -o can be defined to output to file and optionally the directory can be defined as well. However, the name of the file cannot be changed.
+```
+py word_finder.py _hTh_ [-o[=./dir/to/save/file]]
+```
 
 ---
 As of right now. The script expects five-letter english words with no number, accents, or special characters to be passed to it.
