@@ -11,9 +11,10 @@ The script is ran with the following command:
 `py word-finder.py SearchPattern`
 
 *SearchPattern* is a stand-in for an argument to pass it. A search pattern is created with the following:
--Capital letter: Use capital letters in your search pattern to tell the script where in a word that letter is.
--Lower-case letter: Use a lower-case letter to indicate that the letter exists in the word, but not in the location you specified. You can repeat using a letter to indicate that more than one exists in the word.
--Underscore: These denote wildcard spaces in the word. Any letter can fill that space.
+- Capital letter: Use capital letters in your search pattern to tell the script where in a word that letter is.
+- Lower-case letter: Use a lower-case letter to indicate that the letter exists in the word, but not in the location you specified. You can repeat using a letter to indicate that more than one exists in the word.
+- Underscore: These denote wildcard spaces in the word. Any letter can fill that space.
+
 ---
 ### Examples
 The following tells the script to look for words that begin with "gn" and has an e anywhere but the position it is in in the search pattern.
