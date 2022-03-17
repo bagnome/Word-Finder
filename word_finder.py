@@ -121,7 +121,9 @@ class Wordle_Helper:
             print(m)
             curr_index = matches.index(m) + 1
             if (curr_index)%20 == 0:
-                input('------------------------------\n' + str(curr_index) + ' of ' + str(len(matches)) + '\nPress any key to show more...\n------------------------------')
+                txt = input('------------------------------\n' + str(curr_index) + ' of ' + str(len(matches)) + '\nPress [Enter] to show more or [Spacebar] to exit...\n------------------------------')
+                if(txt == ' '):
+                    break
 
         print('------------------------------\n' + str(len(matches)) + ' matches found.\nDone.\n------------------------------')
 
