@@ -66,7 +66,7 @@ py word_finder.py _hTh_ [-o[=./dir/to/save/file]]
 ```
 py word_finder.py _hTh_ [-b=charsToBlacklist]
 ```
-The following example will remove words that contain the letters "o" and "b"
+The following example will remove words that contain the letters "o" and/or "b".
 ```
 py word_finder.py _hTh_ -b=ob
 ```
