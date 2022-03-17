@@ -1,7 +1,7 @@
 # Word-Finder
 Python script that suggests guesses for word games such as Wordle or the game show Lingo.
 
-It is cheating? Maybe? I'm on the fence about that. All this does is provide a list of suggested words, but does not take into account letters that you've guessed and are not present. With that, it's still possible to not pay attention and use a word with letters that you know are not in the word you're trying to guess.
+It is cheating? Maybe? I'm on the fence about that. All this does is provide a list of suggested words. With that, it's still possible to not pay attention and use a word with letters that you know are not in the word you're trying to guess.
 
 This uses a text file with 15,918 five-letter words separated by line. So it's possible Wordle uses a word that's not in this list. But it might still help you guess.
 This list also doesn't seem to use pural versions of words. I don't think Wordle does either, but if they do, then you can get close with this, but it probably won't show up in the output.
@@ -66,7 +66,7 @@ py word_finder.py _hTh_ [-o[=./dir/to/save/file]]
 ```
 py word_finder.py _hTh_ [-b=charsToBlacklist]
 ```
-The following example will remove words that contain the letters "o" and "b"
+The following example will remove words that contain the letters "o" and/or "b".
 ```
 py word_finder.py _hTh_ -b=ob
 ```
