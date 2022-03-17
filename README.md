@@ -17,7 +17,7 @@ The script is ran with the following command:
 
 ---
 ### Examples
-The following tells the script to look for words that begin with "gn" and has an e anywhere but the position it is in in the search pattern.
+The following tells the script to look for words that begin with "gn" and has an "e" anywhere but the position it is in in the search pattern.
 ```
 py word-finder.py GNe__
 ```
@@ -62,7 +62,14 @@ Some optional parameters can be defined after the search patter.
 ```
 py word_finder.py _hTh_ [-o[=./dir/to/save/file]]
 ```
-
+- -b can be used to blacklist specific letters and filters out words with those characters.
+```
+py word_finder.py _hTh_ [-b=charsToBlacklist]
+```
+The following example will remove words that contain the letters "o" and "b"
+```
+py word_finder.py _hTh_ -b=ob
+```
 ---
 As of right now. The script expects five-letter english words with no number, accents, or special characters to be passed to it.
 

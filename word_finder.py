@@ -8,6 +8,7 @@ class Wordle_Helper:
     def __init__(self):
         self.output_setting = 'console'
         self.output_dir = ''
+        self.black_list = []
         self.handle_cli_args(sys.argv)
         self.guess = ''
         if len(sys.argv) > 1:
@@ -24,9 +25,21 @@ class Wordle_Helper:
                 o_param = arg.split('=')
                 if len(o_param) == 2:
                     self.output_dir = o_param[1]
+            if arg.startswith('-b'):
+                b_param = arg.split('=')
+                if len(b_param) == 2:
+                    if re.match('[a-zA-Z]+', b_param[1], re.IGNORECASE):
+                        self.black_list = self.split(b_param[1])
+                    else:
+                        self.stop_with_err('-b can only pass upper or lower case letters.')
+                else:
+                    self.stop_with_err('-b must have characters passed with it. I.e. -b=abdc')
 
-    def stop_with_err(self):
-        print(self.errStr)
+    def stop_with_err(self, errStr=None):
+        if errStr == None:
+            print(self.errStr)
+        else:
+            print(errStr)
         sys.exit()
 
     def check_validiy(self):
@@ -41,8 +54,7 @@ class Wordle_Helper:
             f = open('five_letter_words.txt','r')
             self.words = f.readlines()
         except:
-            print('Could not read five_letter_words.txt')
-            sys.exit()
+            self.stop_with_err('Could not read five_letter_words.txt')
 
     def split(self, word):
         return [char for char in word]
@@ -84,6 +96,16 @@ class Wordle_Helper:
         
         return new_matches
 
+    def remove_blacklist_words(self, matches):
+        new_matches = []
+        if len(self.black_list) == 0:
+            return matches
+        blk_lst_exprs = '(' + ('|'.join(self.black_list)) + ')+'
+        for m in matches:
+            if re.search(blk_lst_exprs, m, re.IGNORECASE) == None:
+                new_matches.append(m)
+        return new_matches
+
     def write_to_file(self, matches):
         now = datetime.now().strftime('%d-%m-%Y_%H-%M-%S')
         try:
@@ -107,6 +129,7 @@ class Wordle_Helper:
         guess_expr = self.gen_expr()
         matches = self.match_with_known_letters(guess_expr)
         matches = self.match_with_present_letters(matches)
+        matches = self.remove_blacklist_words(matches)
         if self.output_setting == 'file':
             self.write_to_file(matches)
         else:
